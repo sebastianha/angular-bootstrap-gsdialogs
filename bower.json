@@ -1,0 +1,31 @@
+{
+  "name": "angular-bootstrap-gsdialogs",
+  "version": "0.1.0",
+  "authors": [
+    "Sebastian Hammerl, Getslash GmbH"
+  ],
+  "description": "A collection of common Bootstrap modal dialogs for AngularJS",
+  "main": [
+	  "angular-bootstrap-gsdialogs.js"
+  ],
+  "keywords": [
+    "angular",
+    "angularjs",
+    "bootstrap",
+    "modal",
+    "dialog"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": ">= 1.2.0",
+    "bootstrap": ">= 3.0.0"
+  },
+  "devDependencies": {
+    "angular-scenario": ">= 1.2.0"
+  }
+}
