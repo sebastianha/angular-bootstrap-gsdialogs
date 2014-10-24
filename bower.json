@@ -11,9 +11,11 @@
   "keywords": [
     "angular",
     "angularjs",
+    "directive",
+    "ui",
     "bootstrap",
-    "modal",
-    "dialog"
+    "dialog",
+    "modal"
   ],
   "license": "MIT",
   "ignore": [
