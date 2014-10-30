@@ -124,12 +124,6 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 					text   : text,
 					buttons: [
 						{
-							class: "btn-default",
-							icon: "glyphicon-ban-circle",
-							value: "Cancel",
-							callback: scope.ctrl.hideConfirm
-						},
-						{
 							class: "btn-danger",
 							icon: "glyphicon-remove",
 							value: "Delete",
