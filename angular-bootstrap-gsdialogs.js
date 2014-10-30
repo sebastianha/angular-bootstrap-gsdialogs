@@ -26,25 +26,23 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 					"</div>" +
 				"</div>" +
 
-				"<div class=\"modal fade\" id=\"gsdialogsDeleteDialog\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"gsdialogsDeleteDialogLabel\" aria-hidden=\"true\">" +
+				"<div class=\"modal fade\" id=\"gsdialogsConfirmDialog\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"gsdialogsConfirmDialogLabel\" aria-hidden=\"true\">" +
 					"<div class=\"modal-dialog\">" +
 						"<div class=\"modal-content\">" +
 							"<div class=\"modal-header\">" +
 								"<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>" +
-								"<h4 class=\"modal-title\" id=\"gsdialogsDeleteDialogTitle\">" +
-									"<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;" +
-									"<span ng-bind=\"deleteTitle\"></span>" +
+								"<h4 class=\"modal-title\" id=\"gsdialogsConfirmDialogTitle\">" +
+									"<span class=\"glyphicon\" ng-class=\"confirmIcon\"></span>&nbsp;" +
+									"<span ng-bind=\"confirmTitle\"></span>" +
 								"</h4>" +
 							"</div>" +
 							"<div class=\"modal-body\">" +
-								"<span ng-bind=\"deleteText\"></span>" +
+								"<span ng-bind=\"confirmText\"></span>" +
 							"</div>" +
 							"<div class=\"modal-footer\">" +
-								"<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">" +
-									"<span class=\"glyphicon glyphicon-ban-circle\"></span> Cancel" +
-								"</button>" +
-								"<button type=\"button\" class=\"btn btn-danger\" ng-click=\"deleteCallback()\">" +
-									"<span class=\"glyphicon glyphicon-remove\"></span> Delete" +
+								"<button ng-repeat=\"button in confirmButtons\" type=\"button\" class=\"btn\" ng-class=\"button.class\" ng-click=\"button.callback()\">" +
+									"<span class=\"glyphicon\" ng-class=\"button.icon\"></span> " +
+									"<span ng-bind=\"button.value\"></span>" +
 								"</button>" +
 							"</div>" +
 						"</div>" +
@@ -72,26 +70,71 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 			};
 
 
-			scope.ctrl.showDelete = function(callback, title, text) {
-				if(callback  instanceof Function) {
-					scope.deleteCallback = callback;
+			scope.ctrl.showConfirm = function(attr) {
+				if(attr === undefined) {
+					attr = {};
 				}
 
+				if(attr === undefined || attr.title === undefined) {
+					attr.title = "Confirm";
+				}
+				scope.confirmTitle = attr.title;
+
+				if(attr === undefined || attr.text === undefined) {
+					attr.text = "Really do it?";
+				}
+				scope.confirmText = attr.text;
+
+				if(attr === undefined || attr.icon === undefined) {
+					attr.icon = "glyphicon-warning-sign";
+				}
+				scope.confirmIcon = attr.icon;
+
+				if(attr === undefined || attr.buttons === undefined) {
+					attr.buttons = [];
+				}
+				scope.confirmButtons = attr.buttons;
+
+				$("#gsdialogsConfirmDialog").modal("show");
+			};
+
+			scope.ctrl.hideConfirm = function() {
+				$("#gsdialogsConfirmDialog").modal("hide");
+			};
+
+
+			scope.ctrl.showDelete = function(callback, title, text) {
 				if(title === undefined) {
 					title = "Delete Item";
 				}
-				scope.deleteTitle = title;
 				if(text === undefined) {
 					text = "Really delete item?";
 				}
-				scope.deleteText = text;
 
-				$("#gsdialogsDeleteDialog").modal("show");
+				scope.ctrl.showConfirm({
+					title  : title,
+					text   : text,
+					buttons: [
+						{
+							class: "btn-default",
+							icon: "glyphicon-ban-circle",
+							value: "Cancel",
+							callback: scope.ctrl.hideConfirm
+						},
+						{
+							class: "btn-danger",
+							icon: "glyphicon-remove",
+							value: "Delete",
+							callback: callback
+						}
+					]
+				});
 			};
 
 			scope.ctrl.hideDelete = function() {
-				$("#gsdialogsDeleteDialog").modal("hide");
+				scope.ctrl.hideConfirm();
 			};
+
 
 			if(scope.onReady  instanceof Function) {
 				scope.onReady();

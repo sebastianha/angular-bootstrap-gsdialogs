@@ -19,5 +19,30 @@ angular.module("angular-bootstrap-gsdialogs", ["ui.gsdialogs"]).controller("inde
 				$scope.gsdialogCtrl.hideDelete();
 			});
 		}, 8000);
+
+//		$scope.gsdialogCtrl.showConfirm({
+//			title  : "Title",
+//			text   : "Text",
+//			icon   : "",
+//			buttons: [
+//				{
+//					class: "btn-danger",
+//					icon: "glyphicon-remove",
+//					value: "FALSE",
+//					callback: function() {
+//						console.log("FALSE");
+//					}
+//				},
+//				{
+//					class: "btn-success",
+//					icon: "glyphicon-ok",
+//					value: "TRUE",
+//					callback: function() {
+//						console.log("TRUE");
+//					}
+//				}
+//			]
+//		});
+
 	};
 });

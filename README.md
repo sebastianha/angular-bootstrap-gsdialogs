@@ -38,6 +38,27 @@ $scope.gsdialogCtrl.hideWaiting();
 $scope.gsdialogCtrl.showDelete(callbackFunction);
 $scope.gsdialogCtrl.showDelete(callbackFunction, "Title", "Text");
 $scope.gsdialogCtrl.hideDelete();
+
+// Show general confirm dialog with custom title, text and buttons
+$scope.gsdialogCtrl.showConfirm({
+    title  : "Title",
+    text   : "Text",
+    icon   : "",
+    buttons: [
+        {
+            class: "btn-danger",
+            icon: "glyphicon-remove",
+            value: "FALSE",
+            callback: callbackFunction
+        },
+        {
+            class: "btn-success",
+            icon: "glyphicon-ok",
+            value: "TRUE",
+            callback: callbackFunction
+        }
+    ]
+});
 ```
 
 See index.html and app.js for examples and how it works.
