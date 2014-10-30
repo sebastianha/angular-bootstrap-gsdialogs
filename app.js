@@ -21,10 +21,11 @@ angular.module("angular-bootstrap-gsdialogs", ["ui.gsdialogs"]).controller("inde
 		}, 8000);
 
 //		$scope.gsdialogCtrl.showConfirm({
-//			title  : "Title",
-//			text   : "Text",
-//			icon   : "",
-//			buttons: [
+//			title    : "Title",
+//			text     : "Text",
+//			icon     : "",
+//			cancelBtn: false,
+//			buttons  : [
 //				{
 //					class: "btn-danger",
 //					icon: "glyphicon-remove",

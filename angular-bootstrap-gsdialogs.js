@@ -40,6 +40,9 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 								"<span ng-bind=\"confirmText\"></span>" +
 							"</div>" +
 							"<div class=\"modal-footer\">" +
+								"<button ng-if=\"cancelButton === true\" type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">" +
+									"<span class=\"glyphicon glyphicon-ban-circle\"></span> Cancel" +
+								"</button>" +
 								"<button ng-repeat=\"button in confirmButtons\" type=\"button\" class=\"btn\" ng-class=\"button.class\" ng-click=\"button.callback()\">" +
 									"<span class=\"glyphicon\" ng-class=\"button.icon\"></span> " +
 									"<span ng-bind=\"button.value\"></span>" +
@@ -89,6 +92,11 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 					attr.icon = "glyphicon-warning-sign";
 				}
 				scope.confirmIcon = attr.icon;
+
+				if(attr === undefined || attr.cancelBtn === undefined) {
+					attr.cancelBtn = true;
+				}
+				scope.cancelButton = attr.cancelBtn;
 
 				if(attr === undefined || attr.buttons === undefined) {
 					attr.buttons = [];
