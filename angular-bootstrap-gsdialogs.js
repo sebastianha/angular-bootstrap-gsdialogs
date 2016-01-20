@@ -56,7 +56,6 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 			scope.ctrl = scope.controller || {};
 
 
-			scope.waitingDialog = $("#gsdialogsWaitingDialog");
 			scope.ctrl.showWaiting = function(title, text, shownCallback, hiddenCallback) {
 				if(title === undefined || title === null) {
 					title = "Please Wait...";
@@ -67,39 +66,38 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 				}
 				scope.waitingText = text;
 
-				scope.waitingDialog.off("shown.bs.modal");
+				$("#gsdialogsWaitingDialog").off("shown.bs.modal");
 				if(typeof shownCallback === "function") {
-					scope.waitingDialog.on("shown.bs.modal", function (e) {
-						scope.waitingDialog.off("shown.bs.modal");
+					$("#gsdialogsWaitingDialog").on("shown.bs.modal", function (e) {
+						$("#gsdialogsWaitingDialog").off("shown.bs.modal");
 						shownCallback(e);
 					});
 				}
 
-				scope.waitingDialog.off("hidden.bs.modal");
+				$("#gsdialogsWaitingDialog").off("hidden.bs.modal");
 				if(typeof hiddenCallback === "function") {
-					scope.waitingDialog.on("hidden.bs.modal", function (e) {
-						scope.waitingDialog.off("hidden.bs.modal");
+					$("#gsdialogsWaitingDialog").on("hidden.bs.modal", function (e) {
+						$("#gsdialogsWaitingDialog").off("hidden.bs.modal");
 						hiddenCallback(e);
 					});
 				}
 
-				scope.waitingDialog.modal("show");
+				$("#gsdialogsWaitingDialog").modal("show");
 			};
 
 			scope.ctrl.hideWaiting = function(hiddenCallback) {
 				if(typeof hiddenCallback === "function") {
-					scope.waitingDialog.off("hidden.bs.modal");
-					scope.waitingDialog.on("hidden.bs.modal", function (e) {
-						scope.waitingDialog.off("hidden.bs.modal");
+					$("#gsdialogsWaitingDialog").off("hidden.bs.modal");
+					$("#gsdialogsWaitingDialog").on("hidden.bs.modal", function (e) {
+						$("#gsdialogsWaitingDialog").off("hidden.bs.modal");
 						hiddenCallback(e);
 					});
 				}
 
-				scope.waitingDialog.modal("hide");
+				$("#gsdialogsWaitingDialog").modal("hide");
 			};
 
 
-			scope.confirmDialog = $("#gsdialogsConfirmDialog");
 			scope.ctrl.showConfirm = function(attr, shownCallback, hiddenCallback) {
 				if(attr === undefined) {
 					attr = {};
@@ -130,35 +128,35 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 				}
 				scope.confirmButtons = attr.buttons;
 
-				scope.confirmDialog.off("shown.bs.modal");
+				$("#gsdialogsConfirmDialog").off("shown.bs.modal");
 				if(typeof shownCallback === "function") {
-					scope.confirmDialog.on("shown.bs.modal", function (e) {
-						scope.confirmDialog.off("shown.bs.modal");
+					$("#gsdialogsConfirmDialog").on("shown.bs.modal", function (e) {
+						$("#gsdialogsConfirmDialog").off("shown.bs.modal");
 						shownCallback(e);
 					});
 				}
 
-				scope.confirmDialog.off("hidden.bs.modal");
+				$("#gsdialogsConfirmDialog").off("hidden.bs.modal");
 				if(typeof hiddenCallback === "function") {
-					scope.confirmDialog.on("hidden.bs.modal", function (e) {
-						scope.confirmDialog.off("hidden.bs.modal");
+					$("#gsdialogsConfirmDialog").on("hidden.bs.modal", function (e) {
+						$("#gsdialogsConfirmDialog").off("hidden.bs.modal");
 						hiddenCallback(e);
 					});
 				}
 
-				scope.confirmDialog.modal("show");
+				$("#gsdialogsConfirmDialog").modal("show");
 			};
 
 			scope.ctrl.hideConfirm = function(hiddenCallback) {
 				if(typeof hiddenCallback === "function") {
-					scope.confirmDialog.off("hidden.bs.modal");
-					scope.confirmDialog.on("hidden.bs.modal", function (e) {
-						scope.confirmDialog.off("hidden.bs.modal");
+					$("#gsdialogsConfirmDialog").off("hidden.bs.modal");
+					$("#gsdialogsConfirmDialog").on("hidden.bs.modal", function (e) {
+						$("#gsdialogsConfirmDialog").off("hidden.bs.modal");
 						hiddenCallback(e);
 					});
 				}
 
-				scope.confirmDialog.modal("hide");
+				$("#gsdialogsConfirmDialog").modal("hide");
 			};
 
 
