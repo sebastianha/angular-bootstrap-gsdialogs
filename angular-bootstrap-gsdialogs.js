@@ -55,25 +55,52 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 		link    : function(scope) {
 			scope.ctrl = scope.controller || {};
 
-			scope.ctrl.showWaiting = function(title, text) {
-				if(title === undefined) {
+
+			scope.waitingDialog = $("#gsdialogsWaitingDialog");
+			scope.ctrl.showWaiting = function(title, text, shownCallback, hiddenCallback) {
+				if(title === undefined || title === null) {
 					title = "Please Wait...";
 				}
 				scope.waitingTitle = title;
-				if(text === undefined) {
+				if(text === undefined || text === null) {
 					text = "Saving data, please wait...";
 				}
 				scope.waitingText = text;
 
-				$("#gsdialogsWaitingDialog").modal("show");
+				scope.waitingDialog.off("shown.bs.modal");
+				if(typeof shownCallback === "function") {
+					scope.waitingDialog.on("shown.bs.modal", function (e) {
+						scope.waitingDialog.off("shown.bs.modal");
+						shownCallback(e);
+					});
+				}
+
+				scope.waitingDialog.off("hidden.bs.modal");
+				if(typeof hiddenCallback === "function") {
+					scope.waitingDialog.on("hidden.bs.modal", function (e) {
+						scope.waitingDialog.off("hidden.bs.modal");
+						hiddenCallback(e);
+					});
+				}
+
+				scope.waitingDialog.modal("show");
 			};
 
-			scope.ctrl.hideWaiting = function() {
-				$("#gsdialogsWaitingDialog").modal("hide");
+			scope.ctrl.hideWaiting = function(hiddenCallback) {
+				if(typeof hiddenCallback === "function") {
+					scope.waitingDialog.off("hidden.bs.modal");
+					scope.waitingDialog.on("hidden.bs.modal", function (e) {
+						scope.waitingDialog.off("hidden.bs.modal");
+						hiddenCallback(e);
+					});
+				}
+
+				scope.waitingDialog.modal("hide");
 			};
 
 
-			scope.ctrl.showConfirm = function(attr) {
+			scope.confirmDialog = $("#gsdialogsConfirmDialog");
+			scope.ctrl.showConfirm = function(attr, shownCallback, hiddenCallback) {
 				if(attr === undefined) {
 					attr = {};
 				}
@@ -103,19 +130,43 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 				}
 				scope.confirmButtons = attr.buttons;
 
-				$("#gsdialogsConfirmDialog").modal("show");
+				scope.confirmDialog.off("shown.bs.modal");
+				if(typeof shownCallback === "function") {
+					scope.confirmDialog.on("shown.bs.modal", function (e) {
+						scope.confirmDialog.off("shown.bs.modal");
+						shownCallback(e);
+					});
+				}
+
+				scope.confirmDialog.off("hidden.bs.modal");
+				if(typeof hiddenCallback === "function") {
+					scope.confirmDialog.on("hidden.bs.modal", function (e) {
+						scope.confirmDialog.off("hidden.bs.modal");
+						hiddenCallback(e);
+					});
+				}
+
+				scope.confirmDialog.modal("show");
 			};
 
-			scope.ctrl.hideConfirm = function() {
-				$("#gsdialogsConfirmDialog").modal("hide");
+			scope.ctrl.hideConfirm = function(hiddenCallback) {
+				if(typeof hiddenCallback === "function") {
+					scope.confirmDialog.off("hidden.bs.modal");
+					scope.confirmDialog.on("hidden.bs.modal", function (e) {
+						scope.confirmDialog.off("hidden.bs.modal");
+						hiddenCallback(e);
+					});
+				}
+
+				scope.confirmDialog.modal("hide");
 			};
 
 
-			scope.ctrl.showDelete = function(callback, title, text) {
-				if(title === undefined) {
+			scope.ctrl.showDelete = function(callback, title, text, shownCallback, hiddenCallback) {
+				if(title === undefined || title === null) {
 					title = "Delete Item";
 				}
-				if(text === undefined) {
+				if(text === undefined || text === null) {
 					text = "Really delete item?";
 				}
 
@@ -130,11 +181,11 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 							callback: callback
 						}
 					]
-				});
+				}, shownCallback, hiddenCallback);
 			};
 
-			scope.ctrl.hideDelete = function() {
-				scope.ctrl.hideConfirm();
+			scope.ctrl.hideDelete = function(hiddenCallback) {
+				scope.ctrl.hideConfirm(hiddenCallback);
 			};
 
 

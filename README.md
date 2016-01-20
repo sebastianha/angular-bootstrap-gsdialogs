@@ -32,12 +32,16 @@ Use the following function to show / hide the modal dialogs:
 // Show / Hide a waiting dialog with optional Title and Text
 $scope.gsdialogCtrl.showWaiting();
 $scope.gsdialogCtrl.showWaiting("Title", "Text");
+$scope.gsdialogCtrl.showWaiting("Title", "Text", shownCallback, hiddenCallback);
 $scope.gsdialogCtrl.hideWaiting();
+$scope.gsdialogCtrl.hideWaiting(hiddenCallback);
 
-// Show / Hide a delete dialog with callback when confirmed and optional Title and Text
+// Show / Hide a delete dialog with button callbackFunction when confirmed and optional Title and Text
 $scope.gsdialogCtrl.showDelete(callbackFunction);
 $scope.gsdialogCtrl.showDelete(callbackFunction, "Title", "Text");
+$scope.gsdialogCtrl.showDelete(callbackFunction, "Title", "Text", shownCallback, hiddenCallback);
 $scope.gsdialogCtrl.hideDelete();
+$scope.gsdialogCtrl.hideDelete(hiddenCallback);
 
 // Show general confirm dialog with custom title, text and buttons
 $scope.gsdialogCtrl.showConfirm({
@@ -58,8 +62,10 @@ $scope.gsdialogCtrl.showConfirm({
             callback: callbackFunction
         }
     ]
-});
+}, shownCallback, hiddenCallback);
 ```
+
+When using hide function with callback the hiddenCallback of the show function will not fire.
 
 See index.html and app.js for examples and how it works.
 
