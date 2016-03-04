@@ -20,6 +20,11 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 								"</h4>" +
 							"</div>" +
 							"<div class=\"modal-body\">" +
+								"<div ng-if=\"waitingProgress !== null\">" +
+									"<uib-progressbar max=\"100\" value=\"waitingProgress\" class=\"progress-striped active\">" +
+										"<span ng-bind=\"waitingProgress + '%'\"></span>" +
+									"</uib-progressbar>" +
+								"</div>" +
 								"<span ng-bind=\"waitingText\"></span>" +
 							"</div>" +
 						"</div>" +
@@ -56,7 +61,7 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 			scope.ctrl = scope.controller || {};
 
 
-			scope.ctrl.showWaiting = function(title, text, shownCallback, hiddenCallback) {
+			scope.showWaitingDialog = function(title, text, shownCallback, hiddenCallback) {
 				if(title === undefined || title === null) {
 					title = "Please Wait...";
 				}
@@ -83,6 +88,22 @@ angular.module("ui.gsdialogs", []).directive("gsdialogs", function() {
 				}
 
 				$("#gsdialogsWaitingDialog").modal("show");
+			};
+
+			scope.ctrl.showWaiting = function(title, text, shownCallback, hiddenCallback) {
+				scope.waitingProgress = null;
+				scope.showWaitingDialog(title, text, shownCallback, hiddenCallback);
+			};
+
+			scope.ctrl.showWaitingProgress = function(title, text, shownCallback, hiddenCallback) {
+				scope.waitingProgress = 0;
+				scope.showWaitingDialog(title, text, shownCallback, hiddenCallback);
+			};
+
+			scope.ctrl.setWaitingProgress = function(percent) {
+				if(scope.waitingProgress !== null) {
+					scope.waitingProgress = percent;
+				}
 			};
 
 			scope.ctrl.hideWaiting = function(hiddenCallback) {

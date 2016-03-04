@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("angular-bootstrap-gsdialogs", ["ui.gsdialogs"]).controller("index", function($scope, $timeout) {
+angular.module("angular-bootstrap-gsdialogs", ["ui.bootstrap", "ui.gsdialogs"]).controller("index", function($scope, $timeout) {
 	$scope.gsdialogCtrl = {};
 	$scope.onReady = function() {
 
